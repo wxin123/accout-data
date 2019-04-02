@@ -6,9 +6,12 @@ import com.example.demo.param.AccountParam;
 import com.example.demo.param.BillParam;
 import com.example.demo.service.AccountService;
 import com.example.demo.service.BillService;
+import com.example.demo.utils.Pair;
+import com.example.demo.utils.Render;
 import com.example.demo.vos.AccountVo;
 import com.example.demo.vos.BillVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,17 +29,20 @@ public class BillController {
 
     /**
      * 列表
+     *
      * @param param
      * @return
      */
     @GetMapping("/list")
     @ResponseBody
-    public List<BillVo> list(AccountParam param) {
-        return  service.findAll();
+    public Render list(BillParam param) {
+        Pair<Long, List<BillVo>> pair = service.findPage(param);
+        return Render.succes(pair);
     }
 
     /**
      * 详情
+     *
      * @param code
      * @return
      */
@@ -48,16 +54,18 @@ public class BillController {
 
     /**
      * 新建
+     *
      * @param param
      */
     @PostMapping("")
     @ResponseBody
-    public BillVo create(BillParam param) {
+    public BillVo create(@RequestBody BillParam param) {
         return service.create(param);
     }
 
     /**
      * 编辑
+     *
      * @param param
      */
     @PutMapping("")
@@ -68,12 +76,13 @@ public class BillController {
 
     /**
      * 删除
+     *
      * @param code
      * @return
      */
     @DeleteMapping("/{code}")
     @ResponseBody
-    public AccountVo deleteByCode(@PathVariable("code") String code){
+    public AccountVo deleteByCode(@PathVariable("code") String code) {
         return null;
     }
 }

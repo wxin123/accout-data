@@ -20,4 +20,9 @@ public class DateHelper {
         }
         return null;
     }
+
+    public static String format(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //加上时间
+        return format.format(date);
+    }
 }
